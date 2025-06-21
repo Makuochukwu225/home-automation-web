@@ -1,0 +1,72 @@
+import React from 'react'
+import { useState } from "react"
+import { LuAirVent, LuBell, LuDoorOpen, LuFan, LuLightbulb, LuSnowflake, LuToggleLeft, LuToggleRight, LuTv, LuX } from "react-icons/lu"
+import { Dialog } from "radix-ui";
+import AllRooms from './AllRooms';
+import { rooms } from '@/constants/structure';
+
+function RoomOverview() {
+  
+ 
+  const [openRoom, setOpenRoom] = useState(false)
+  
+  return (
+    <>
+    <Dialog.Root open={openRoom} onOpenChange={setOpenRoom}>
+        <Dialog.Portal >
+          <Dialog.Overlay className="fixed bg-black inset-0 data-[state=open]:animate-overlayShow" />
+          <Dialog.Content className="fixed top-1/2 left-1/2 h-full lg:h-[85vh] max-h-[100dvh] w-full max-w-[700px] -translate-x-1/2 -translate-y-1/2 lg:rounded-md bg-gray-900 p-4 shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow">
+            <Dialog.Title className="m-0 text-[18px] font-black ">
+              All Rooms
+            </Dialog.Title>
+            <Dialog.Description className="mb-5 mt-2.5 text-[15px] leading-normal font-bold">
+              Manage all your Rooms here:
+            </Dialog.Description>
+            
+            <AllRooms/>
+            <Dialog.Close asChild>
+              <button
+                className="absolute right-2.5 top-2.5 inline-flex size-[25px] appearance-none items-center justify-center rounded-full  cursor-pointer hover:text-[30px] focus:outline-none"
+						aria-label="Close"
+              >
+                <LuX />
+              </button>
+            </Dialog.Close>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    <section className=" px-2">
+           <h2 className="font-black text-lg ">Rooms:</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-3  gap-2 mt-2">
+        {
+          rooms.map((items, index) => {
+            return (
+              <div onClick={()=> setOpenRoom(true)} key={index} className={`h-20 rounded-2xl bg-gray-900 text-white flex   items-center justify-center p-1 gap-4 ${index > 4 ? "hidden":""}  cursor-pointer active:bg-gray-900/80`}>
+                <div className=" flex-1 h-full flex items-center justify-center">
+                  <LuDoorOpen size={40}/>
+                </div>
+                <div className="w-[60%]">
+                  <p className="text-lg font-bold">{items.room}</p>
+                <p className="text-sm text-[#a3a3a3]">Appliances: {items.counts}</p>
+                </div>
+              </div>
+            )
+          })
+        }
+        {
+          rooms.length > 5 ? (
+            <div onClick={()=> setOpenRoom(true)} className="h-20 rounded-2xl bg-gray-900 text-white flex flex-col  items-center justify-center opacity-60  cursor-pointer active:bg-gray-900/80">
+                <p>view all</p>
+              </div>
+          ) : ""
+        }
+        </div>
+        
+        
+
+        </section>
+    </>
+  )
+}
+
+export default RoomOverview

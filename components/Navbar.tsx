@@ -9,16 +9,6 @@ const navList = [
     icon: <LuHouse size={24}/>
   },
   {
-    name: "cam",
-    link: "/",
-    icon: <LuCamera size={24}/>
-  },
-  {
-    name: "search",
-    link: "/",
-    icon: <LuSearch size={24}/>
-  },
-  {
     name: "settings",
     link: "/",
     icon: <LuSettings size={24}/>
