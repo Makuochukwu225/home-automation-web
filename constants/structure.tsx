@@ -2,7 +2,7 @@ import { LuAirVent, LuFan, LuLightbulb, LuSnowflake, LuTv} from "react-icons/lu"
 
 export const devList = [
     {
-      device: "lights",
+      device: "Lights",
       icon: <LuLightbulb  size={32}/>
     },
     {
@@ -10,7 +10,7 @@ export const devList = [
       icon: <LuFan size={32}/>
     },
     {
-      device: "A/Cs",
+      device: "Air Conditioner",
       icon: <LuAirVent size={32}/>
     },
     {

@@ -12,7 +12,7 @@ function Frequent() {
   return (
     <>
     <section className='w-full px-2'>
-      <h2 className="font-black text-lg ">Frequently used:</h2>
+      <h2 className="font-black text-lg ">Quick actions:</h2>
           <div className="justify-evenly space-y-2  mb-5 mt-2 md:grid grid-cols-2 md:gap-2">
         {
           devList.map((items, index) => {
@@ -27,7 +27,7 @@ function Frequent() {
                 </div>
                 <div className="h-full w-[15%] ">
                   <div onClick={handleToggle} className="w-fit h-fit">
-                    {isOn ? <LuToggleLeft size={40} color="red" className=" cursor-pointer active:text-white/30" />: <LuToggleRight size={40} color="green" className=" cursor-pointer active:text-white/30" />}
+                    {isOn ? <LuToggleLeft size={40}  className="text-gray-400 cursor-pointer active:text-white/30" />: <LuToggleRight size={40} className="text-blue-700 cursor-pointer active:text-white/30" />}
                   </div>
                 </div>
               </div>
