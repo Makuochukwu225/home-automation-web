@@ -64,17 +64,22 @@ function RoomOverview() {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-    <section className=" px-2">
-           <h2 className="font-black text-lg ">Rooms:</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-3  gap-2 mt-2">
+    <section className=" w-full px-2 ">
+           <div className='flex items-center justify-between p-2'>
+            <h2 className="font-black text-lg ">Rooms:</h2>
+            <p onClick={()=> setOpenRoom(true)} className=" text-white hover:text-blue-400 cursor-pointer active:text-blue-600/80">
+                view all
+              </p>
+           </div>
+          <div className="flex lg:grid grid-cols-2  lg:grid-cols-3 overflow-hidden scrollbar-hide overflow-x-scroll gap-2 mt-2 p-2">
         {
           rooms.map((items, index) => {
             return (
-              <div onClick={()=> handleRoom(items.room)} key={index} className={`h-20 rounded-2xl bg-gray-900 text-white flex   items-center justify-center p-1 gap-4 ${index > 4 ? "hidden":""}  cursor-pointer active:bg-gray-900/80`}>
+              <div onClick={()=> handleRoom(items.room)} key={index} className={`w-[200px] rounded-2xl bg-blue-950 text-white flex flex-col shrink-0  items-center justify-center p-2 border-blue-700  border gap-4 ${index > 4 ? "hidden":""}  cursor-pointer active:bg-gray-900/80`}>
                 <div className=" flex-1 h-full flex items-center justify-center">
                   <LuDoorOpen size={40}/>
                 </div>
-                <div className="w-[60%]">
+                <div className="w-[60%]  flex items-center flex-col">
                   <p className="text-lg font-bold">{items.room}</p>
                 <p className="text-sm text-[#a3a3a3]">Appliances: {items.counts}</p>
                 </div>
@@ -82,14 +87,7 @@ function RoomOverview() {
             )
           })
         }
-        {
-          rooms.length > 5 ? (
-            <div onClick={()=> setOpenRoom(true)} className="h-20 rounded-2xl bg-gray-600 text-white flex flex-col  items-center justify-center opacity-60  cursor-pointer active:bg-gray-600/80">
-              <LuEllipsis size={24}/>
-                <p>view all</p>
-              </div>
-          ) : ""
-        }
+        
         </div>
         
         

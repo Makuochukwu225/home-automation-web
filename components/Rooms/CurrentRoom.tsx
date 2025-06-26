@@ -1,6 +1,6 @@
 import { Dialog } from 'radix-ui';
 import React, { useState } from 'react'
-import { LuHousePlus, LuPlus, LuToggleLeft, LuX } from 'react-icons/lu';
+import { LuHousePlus, LuPlus, LuToggleLeft, LuTrash2, LuX } from 'react-icons/lu';
 import AddRoom from './AddRoom';
 interface CurrentRoomProps {
   currentRoom: string;
@@ -13,7 +13,7 @@ function CurrentRoom({ currentRoom, setCurrentRoom }: CurrentRoomProps) {
     <Dialog.Root open={addRoom} onOpenChange={setAddRoom}>
         <Dialog.Portal >
           <Dialog.Overlay className="fixed bg-black inset-0 data-[state=open]:animate-overlayShow" />
-          <Dialog.Content className="fixed top-1/2 left-1/2 h-[60vh] lg:h-[85vh] max-h-[100dvh] w-[70vw] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-gray-900 p-4 shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow">
+          <Dialog.Content className="fixed top-1/2 left-1/2  lg:h-[85vh] max-h-[100dvh] lg:w-[70vw] w-[90vw] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-gray-900 p-4 shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow">
             <Dialog.Title className="m-0 hidden text-[18px] font-black">
               All Appliances
             </Dialog.Title>
@@ -45,6 +45,9 @@ function CurrentRoom({ currentRoom, setCurrentRoom }: CurrentRoomProps) {
             <div key={index} className="flex flex-col items-center p-3  bg-blue-900/50 h-[150px] overflow-hidden rounded-lg relative">
                                 <div className='absolute top-2 right-2'>
                                   <LuToggleLeft size={24} className="text-gray-300 hover:text-blue-600 cursor-pointer" />
+                                  </div>
+                                  <div className='absolute top-2 left-2'>
+                                  <LuTrash2 size={20} className="text-gray-300 hover:text-red-600 cursor-pointer" />
                                   </div>
                                 <div className='flex-2 flex items-center w-full justify-center'>
                                   <LuHousePlus size={40} className="text-blue-300" />

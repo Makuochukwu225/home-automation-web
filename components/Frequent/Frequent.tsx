@@ -11,13 +11,13 @@ function Frequent() {
   
   return (
     <>
-    <section className='w-full px-2'>
+    <section className='w-full px-2 '>
       <h2 className="font-black text-lg ">Quick actions:</h2>
           <div className="justify-evenly space-y-2  mb-5 mt-2 md:grid grid-cols-2 md:gap-2">
         {
           devList.map((items, index) => {
             return (
-              <div key={index} className="h-20 w-full rounded-2xl bg-gray-900 text-white flex gap-2 items-center justify-center overflow-hidden">
+              <div key={index} className="h-20 w-full rounded-2xl bg-blue-950 text-white flex gap-2 items-center justify-center overflow-hidden">
                 <div className=" flex-1 h-full flex items-center justify-center">
                   {items.icon}
                 </div>

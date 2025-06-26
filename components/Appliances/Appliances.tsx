@@ -1,7 +1,7 @@
 "use client"
 import { Dialog } from "radix-ui";
 import { useState } from "react";
-import { LuMinus, LuPlus, LuToggleLeft, LuTrash, LuX } from "react-icons/lu";
+import { LuMinus, LuPlus, LuToggleLeft, LuTrash, LuTrash2, LuX } from "react-icons/lu";
 import CurrentAppliance from "./CurrentAppliance"
 
 interface applianceProp  {
@@ -61,11 +61,11 @@ function Appliances({name, count}:applianceProp) {
                     {name.toLowerCase() === "fans"  ? <div className="flex items-center gap-2">
                       <LuMinus size={24} color="gray"/>
                       <LuPlus size={24} color="gray"/>
-                      </div> : name.toLowerCase() === "air conditioners" ?  <div className="flex items-center gap-2">
+                      </div> : name.toLowerCase() === "air conditioner" ?  <div className="flex items-center gap-2">
                       <LuMinus size={24} color="gray"/>
                       <LuPlus size={24} color="gray"/>
                       </div>: ""}
-                    <LuTrash size={24} color="red"/>
+                    <LuTrash2 size={24} className="hover:text-red-600 text-gray-500"/>
                   </div>
                 </div>
               ))

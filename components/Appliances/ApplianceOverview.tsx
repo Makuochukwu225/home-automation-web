@@ -69,14 +69,14 @@ function ApplianceOverview() {
         {
           devList.map((items, index) => {
             return (
-              <div onClick={()=> handleAppliance(items.device)} key={index} className={`h-full rounded-2xl p-3 w-20 bg-gray-900 text-white flex flex-col shrink-0 items-center justify-center cursor-pointer active:bg-gray-900/80 ${index>3 ? "hidden":""}`}>
+              <div onClick={()=> handleAppliance(items.device)} key={index} className={`h-full rounded-2xl p-3 w-20 bg-blue-950 border border-blue-700  text-white flex flex-col shrink-0 items-center justify-center cursor-pointer active:bg-gray-900/80 ${index>3 ? "hidden":""}`}>
                 {items.icon}
                 <p className='text-xs text-center'>{items.device}</p>
               </div>
             )
           })
         }
-        {devList.length > 4 && <div onClick={()=> setOpenA(true)} className={`h-full rounded-2xl w-20 bg-gray-900 text-white flex flex-col shrink-0 items-center justify-center cursor-pointer active:bg-gray-900/80`}>
+        {devList.length > 4 && <div onClick={()=> setOpenA(true)} className={`h-full rounded-2xl w-20 bg-gray-900 text-white flex flex-col shrink-0 items-center justify-center cursor-pointer active:bg-gray-900/80 border border-gray-700`}>
         
           <LuEllipsis/>
           <p className='text-sm text-[#a3a3a3]'>View all</p>

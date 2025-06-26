@@ -22,7 +22,7 @@ function RegisterForm() {
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" name="password" placeholder='Enter your password here' required className='focus:outline-0 border border-blue-600 rounded p-2'/>
         </div>
-        <button type="submit" className='bg-blue-700 hover:bg-blue-500 p-2 rounded '>Login</button>
+        <button type="submit" className='bg-blue-700 hover:bg-blue-600 h-10 text-[14px] hover:text-[15px] hover:p-2.5 p-2 rounded '>Register</button>
       </form>
       </div>
     </div>
