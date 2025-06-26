@@ -1,4 +1,6 @@
+"use client"
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import React from 'react'
 import { LuCamera, LuHouse, LuMenu, LuSearch, LuSettings } from 'react-icons/lu'
 
@@ -16,8 +18,12 @@ const navList = [
 ]
 
 const Navbar = () => {
+  const pathname = usePathname()
   return (
-    <nav className='w-full sticky bottom-0 h-10 '>
+    <>
+    {
+      pathname === '/' && (
+        <nav className='w-full sticky bottom-0 h-10 '>
       <ul className='flex justify-evenly items-center h-full gap-2 '>
         {
           navList.map((navItem, index)=>{
@@ -32,6 +38,9 @@ const Navbar = () => {
         }
       </ul>
     </nav>
+      )
+    }
+    </>
   )
 }
 
