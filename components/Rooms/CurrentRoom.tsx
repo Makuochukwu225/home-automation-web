@@ -2,11 +2,13 @@ import { Dialog } from 'radix-ui';
 import React, { useState } from 'react'
 import { LuHousePlus, LuPlus, LuToggleLeft, LuTrash2, LuX } from 'react-icons/lu';
 import AddRoom from './AddRoom';
+import {Pin} from "@/types/pin";
 interface CurrentRoomProps {
   currentRoom: string;
   setCurrentRoom: React.Dispatch<React.SetStateAction<string>>;
+  pins?: Pin[];
 }
-function CurrentRoom({ currentRoom, setCurrentRoom }: CurrentRoomProps) {
+function CurrentRoom({ currentRoom, setCurrentRoom,pins }: CurrentRoomProps) {
   const [addRoom, setAddRoom] = useState(false);
   return (
     <>
@@ -41,7 +43,7 @@ function CurrentRoom({ currentRoom, setCurrentRoom }: CurrentRoomProps) {
         <p className="text-sm text-gray-400">Details about the current room will go here.</p>
         <div className='grid grid-cols-2 gap-4 mt-4'>
           {
-          Array.from({ length: 10 }).map((_, index) => (
+        pins?.map((pin, index) => (
             <div key={index} className="flex flex-col items-center p-3  bg-blue-900/50 h-[150px] overflow-hidden rounded-lg relative">
                                 <div className='absolute top-2 right-2'>
                                   <LuToggleLeft size={24} className="text-gray-300 hover:text-blue-600 cursor-pointer" />
@@ -52,15 +54,15 @@ function CurrentRoom({ currentRoom, setCurrentRoom }: CurrentRoomProps) {
                                 <div className='flex-2 flex items-center w-full justify-center'>
                                   <LuHousePlus size={40} className="text-blue-300" />
                                 </div>
-                                <div className='flex-1 items-center flex flex-col justify-center'> 
-                                  <span className="text-gray-200 italic text-lg">Appliance name</span>
+                                <div className='flex-1 items-center flex flex-col justify-center'>
+                                  <span className="text-gray-200 italic text-lg">Id: {pin.id}</span>
                                   <span className="text-xs text-gray-500">Status: OFF</span>
                                 </div>
                               </div>
           ))
         }
         </div>
-        
+
         <button onClick={() => setAddRoom(true)}
                 className="p-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 absolute bottom-20 right-5"
               >

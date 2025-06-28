@@ -5,15 +5,20 @@ import { Dialog } from "radix-ui";
 import AllRooms from './AllRooms';
 import { rooms } from '@/constants/structure';
 import CurrentRoom from './CurrentRoom';
+import {useWebSocket} from "@/context/WebSocketProvider";
+import {Device} from "@/types/device";
 
 function RoomOverview() {
-  
- 
+
+
   const [openRoom, setOpenRoom] = useState(false)
   const [currentRoom, setCurrentRoom] = useState("");
   const [openCurrentRoom, setOpenCurrentRoom] = useState(false);
-  const handleRoom = (name: string) => {
-    setCurrentRoom(name);
+    const {devices} = useWebSocket();
+    const [currentDevice, setCurrentDevice] = useState<Device|null>(null);
+  const handleRoom = (name: Device) => {
+    setCurrentRoom(name.id);
+    setCurrentDevice(name);
     setOpenCurrentRoom(true);
   };
   return (
@@ -26,10 +31,10 @@ function RoomOverview() {
 					All Appliances
 				</Dialog.Title>
 				<Dialog.Description className="mb-5 mt-2.5 text-[15px] leading-normal font-bold hidden ">
-					Manage your appliciances here:
+					Manage your Appliances here:
 				</Dialog.Description>
-				
-				<CurrentRoom currentRoom={currentRoom} setCurrentRoom={setCurrentRoom}/>
+
+				<CurrentRoom pins={currentDevice?.pins} currentRoom={currentRoom} setCurrentRoom={setCurrentRoom}/>
 				<Dialog.Close asChild>
 					<button
 						className="absolute right-2.5 top-2.5 inline-flex size-[25px]  items-center justify-center rounded-full  cursor-pointer hover:text-[30px] focus:outline-none"
@@ -51,7 +56,7 @@ function RoomOverview() {
             <Dialog.Description className="mb-5 mt-2.5 text-[15px] leading-normal font-bold">
               Manage all your Rooms here:
             </Dialog.Description>
-            
+
             <AllRooms/>
             <Dialog.Close asChild>
               <button
@@ -73,24 +78,24 @@ function RoomOverview() {
            </div>
           <div className="flex lg:grid grid-cols-2  lg:grid-cols-3 overflow-hidden scrollbar-hide overflow-x-scroll gap-2 mt-2 p-2">
         {
-          rooms.map((items, index) => {
+          devices.map((items, index) => {
             return (
-              <div onClick={()=> handleRoom(items.room)} key={index} className={`w-[200px] rounded-2xl bg-blue-950 text-white flex flex-col shrink-0  items-center justify-center p-2 border-blue-700  border gap-4 ${index > 4 ? "hidden":""}  cursor-pointer active:bg-gray-900/80`}>
+              <div onClick={()=> handleRoom(items)} key={index} className={`w-[200px] rounded-2xl bg-blue-950 text-white flex flex-col shrink-0  items-center justify-center p-2 border-blue-700  border gap-4 ${index > 4 ? "hidden":""}  cursor-pointer active:bg-gray-900/80`}>
                 <div className=" flex-1 h-full flex items-center justify-center">
                   <LuDoorOpen size={40}/>
                 </div>
                 <div className="w-[60%]  flex items-center flex-col">
-                  <p className="text-lg font-bold">{items.room}</p>
-                <p className="text-sm text-[#a3a3a3]">Appliances: {items.counts}</p>
+                  <p className="text-lg font-bold">{items.id}</p>
+                <p className="text-sm text-[#a3a3a3]">Appliances: {items.pins.length}</p>
                 </div>
               </div>
             )
           })
         }
-        
+
         </div>
-        
-        
+
+
 
         </section>
     </>
