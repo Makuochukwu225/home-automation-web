@@ -1,38 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {Device} from "@/types/device";
+import {WebSocketMessage} from "@/types/websocket-message";
+import LightSensorComponent from "@/components/LightSensorComponent";
+import TemperatureSensorComponent from "@/components/TemperatureSensorComponent";
+import TimestampComponent from "@/components/TimestampComponent";
+import DevicesListComponent from "@/components/DevicesListComponent";
 
-// Define types for TypeScript
-interface Pin {
-  id: number;
-  state: string;
-  mode: string;
-  value: boolean;
-  loadType?: string;
-}
 
-interface Device {
-  id: string;
-  pins: Pin[];
-  capabilities?: string;
-  lastSeen: string;
-  online: boolean;
-  status?: Record<string, any>;
-}
 
-interface WebSocketMessage {
-  type: string;
-  devices?: Device[];
-  deviceId?: string;
-  pinId?: number;
-  state?: string;
-  sensor?: string;
-  value?: boolean;
-  device?: Device;
-  update?: any;
-  error?: string;
-  message?: string;
-}
 
 export default function Home() {
   const [devices, setDevices] = useState<Device[]>([]);
@@ -253,6 +230,20 @@ export default function Home() {
     }
   };
 
+  const  assignedPin = (deviceId: string, pinId: number, loadType: string)=>{
+if (socket && socket.readyState === WebSocket.OPEN){
+  socket.send(
+      JSON.stringify({
+        type: "assign_load",
+        command: "toggle_pin",
+        deviceId,
+        pinId,
+        loadType: loadType,
+      })
+  );
+}
+  }
+
   return (
       <div className="min-h-screen flex flex-col items-center justify-start p-4 bg-gray-50">
         <title>Home Automation Dashboard</title>
@@ -278,103 +269,7 @@ export default function Home() {
             )}
           </div>
 
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full">
-            {devices.length === 0 ? (
-                <p className="text-gray-500 text-center col-span-full">
-                  No devices connected
-                </p>
-            ) : (
-                devices.map((device) => (
-                    <div
-                        key={device.id}
-                        className={`bg-white shadow-md rounded-lg p-6 flex flex-col ${
-                            device.online === false ? "opacity-60" : ""
-                        }`}
-                    >
-                      <div className="flex justify-between items-center">
-                        <h2 className="text-2xl font-semibold text-blue-500 break-words">
-                          {device.id}
-                        </h2>
-                        <span
-                            className={`h-3 w-3 rounded-full ${
-                                device.online !== false ? "bg-green-500" : "bg-gray-400"
-                            }`}
-                        ></span>
-                      </div>
-
-                      {device.capabilities && (
-                          <div className="mt-4">
-                            <h3 className="text-lg font-semibold mb-1 text-gray-700">Capabilities:</h3>
-                            <p className="text-gray-600">{device.capabilities}</p>
-                          </div>
-                      )}
-
-                      <div className="mt-4">
-                        <h3 className="text-lg font-semibold mb-1 text-gray-700">Pins:</h3>
-                        {device.pins && device.pins.length > 0 ? (
-                            device.pins.map((pin) => (
-                                <div key={pin.id} className="flex justify-between items-center py-1">
-                        <span className="text-gray-600">
-                          Pin {pin.id}
-                          {pin.loadType ? ` (${pin.loadType})` : ''}:
-                        </span>
-                                  <button
-                                      onClick={() => togglePin(device.id, pin.id, pin.state)}
-                                      disabled={device.online === false}
-                                      className={`px-4 py-2 rounded-full text-sm font-bold transition-colors ${
-                                          pin.value || pin.state === "HIGH"
-                                              ? "bg-yellow-400 text-gray-900 hover:bg-yellow-500"
-                                              : "bg-gray-700 text-white hover:bg-gray-800"
-                                      } ${device.online === false ? "cursor-not-allowed" : ""}`}
-                                  >
-                                    {pin.value || pin.state === "HIGH" ? "ON" : "OFF"}
-                                  </button>
-                                </div>
-                            ))
-                        ) : (
-                            <p className="text-gray-600">No pins available for this device</p>
-                        )}
-                      </div>
-
-                      {device.status && Object.keys(device.status).length > 0 && (
-                          <div className="mt-4">
-                            <h3 className="text-lg font-semibold mb-1 text-gray-700">Sensor Data:</h3>
-                            {Object.entries(device.status).map(([key, value]) => (
-                                <div key={key} className="flex justify-between items-center py-1">
-                                  <span className="text-gray-600 capitalize">{key}:</span>
-                                  <span className="font-medium">{value}</span>
-                                </div>
-                            ))}
-                          </div>
-                      )}
-
-                      {device.status && (
-                          <div className="mt-4">
-                            <h3 className="text-lg font-semibold mb-1 text-gray-700">Sensors:</h3>
-                            {device.status.light !== undefined && (
-                                <div className="flex flex-col">
-                                  <div className="flex justify-between items-center">
-                                    <span>Light Intensity:</span>
-                                    <span className="font-medium">{device.status.light}%</span>
-                                  </div>
-                                  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-                                    <div
-                                        className="bg-yellow-400 h-2.5 rounded-full"
-                                        style={{ width: `${device.status.light}%` }}
-                                    ></div>
-                                  </div>
-                                </div>
-                            )}
-                          </div>
-                      )}
-
-                      <div className="mt-4 text-sm text-gray-500">
-                        Last seen: {new Date(device.lastSeen).toLocaleString()}
-                      </div>
-                    </div>
-                ))
-            )}
-          </div>
+        <DevicesListComponent devices={devices} togglePin={togglePin} assignedPin={assignedPin}/>
         </main>
       </div>
   );
